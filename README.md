@@ -3,13 +3,13 @@ kettle-fixture
 
 Allows you to write FitNesse fixtures using Kettle jobs and transformations.
 
-To see an example, change to the sample directory, do
+To see an example, unpack the distribution archive, change to the sample directory and do
 
     java -jar /path/to/your/fitnesse.jar -o -p 8000
 
-and browse to http://localhost:8080.
+Then, browse to http://localhost:8080.
 
-To build the package, you need the gradle build management tool (http://www.gradle.org). To build the distribution package, do
+To build the distribution package, you need the gradle build management tool (http://www.gradle.org). Build the package with
 
     gradle distTar
 
