@@ -9,3 +9,13 @@ To see an example, change to the sample directory, do
 
 and browse to http://localhost:8080.
 
+To build the package, you need the gradle build management tool (http://www.gradle.org). To build the distribution package, do
+
+    gradle distTar
+
+for a tarball or
+
+    gradle distZip
+
+for a ZIP archive and look in build/distribution.
+
