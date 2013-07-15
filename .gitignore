@@ -6,3 +6,9 @@ build
 .idea
 *.iml
 out
+
+# volatile fitnesse files
+*.zip
+src/dist/sample/FitNesseRoot/files/
+src/dist/sample/FitNesseRoot/ErrorLogs/
+src/dist/sample/FitNesseRoot/RecentChanges/
