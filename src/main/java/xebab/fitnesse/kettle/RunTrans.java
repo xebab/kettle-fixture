@@ -61,7 +61,7 @@ public class RunTrans
             {
                 String[] cell = new String[2];
                 cell[0] = fieldNames[i];
-                cell[1] = data[i].toString();
+                cell[1] = (data[i] == null ? "" : data[i].toString());
                 foo.add(Arrays.asList(cell));
             }
             lll.add(foo);
