@@ -1,0 +1,18 @@
+!define TEST_SYSTEM {slim}
+
+!path ${java.class.path}
+!path ../**.jar
+
+Import the package containing the fixture classes.
+
+| import |
+| xebab.fitnesse.kettle |
+
+Run a job and check the result.
+
+| Query:Run Job | sample.kjb |
+| type | filename | parentorigin |
+| General | files-to-result.ktr | sample |
+| General | sample.csv | sample |
+| General | sample.kjb | sample |
+| General | sample.ktr | sample |
