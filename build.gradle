@@ -1,12 +1,12 @@
 apply plugin: 'java'
 apply plugin: 'java-library-distribution'
 
-version = '0.2.0'
+version = '0.3-SNAPSHOT'
 
 repositories {
     mavenCentral()
     ivy {
-        url "http://repo.pentaho.org/artifactory/repo"
+        url "http://nexus.pentaho.org/content/groups/omni"
         layout "pattern", {
             artifact "[organisation]/[module]/[revision]/[module]-[revision].[ext]"
             ivy "[organisation]/[module]/[revision]/[module]-[revision].ivy.xml"
@@ -15,218 +15,10 @@ repositories {
     }
 }
 
-/*
- * Prior to version 5, Kettle does not have proper dependency
- * management. That is why we add each dependency explicitly and disable
- * all transitive dependencies.
- *
- * differences from libext in 4.4.1-GA:
- * - no JDBC drivers
- * - qname.jar ommitted: unknown, even by SHA-1 sum
- * - junit omitted
- * - commons-vfs instead of kettle-vfs (cf. PDI-10174)
- * - pentaho-formula-editor-0.0.1, pentaho-vfs-browser-2.0.5,
- *   pentaho-xul-core-3.3.5, pentaho-xul-swt-3.3.5 omitted: presumably, these are FE components
- * - jsr173_api: checksum differs from maven artifact, but there is only one version
- * - odfdom: checksum differs in maven and pentaho repos
- * - xbean is actually org.apache.xmlbeans:xmlbeans (by SHA-1 sum)
- */
 dependencies {
-    compile group: "pentaho-kettle", name: "kettle-core", version: "4.4.1-GA", transitive: false
-    compile group: "pentaho-kettle", name: "kettle-engine", version: "4.4.1-GA", transitive: false
-    runtime group: "pentaho-kettle", name: "kettle-db", version: "4.4.1-GA", transitive: false
-
-    runtime group: "ascsapjco3wrp", name: "ascsapjco3wrp", version: "20100529", transitive: false
-    runtime group: "asm", name: "asm", version: "1.5.3", transitive: false
-    runtime group: "asm", name: "asm-attrs", version: "1.5.3", transitive: false
-    runtime group: "avalon-framework", name: "avalon-framework", version: "4.1.3", transitive: false
-    runtime group: "barbecue", name: "barbecue", version: "1.5-beta1", transitive: false
-    runtime group: "bouncycastle", name: "bcmail-jdk14", version: "138", transitive: false
-    runtime group: "bouncycastle", name: "bcprov-jdk14", version: "138", transitive: false
-    runtime group: "bsf", name: "bsf", version: "2.4.0", transitive: false
-    runtime group: "cglib", name: "cglib-nodep", version: "2.1_3", transitive: false
-    runtime group: "com.enterprisedt", name: "edtftpj", version: "2.1.0", transitive: false
-    runtime group: "com.google.code.findbugs", name: "jsr305", version: "1.3.9", transitive: false
-    runtime group: "com.google.collections", name: "google-collections", version: "1.0-rc5", transitive: false
-    runtime group: "com.google.gdata", name: "gdata-analytics", version: "2.3.0", transitive: false
-    runtime group: "com.google.gdata", name: "gdata-analytics-meta", version: "2.1", transitive: false
-    runtime group: "com.google.gdata", name: "gdata-client", version: "1.41.4", transitive: false
-    runtime group: "com.google.gdata", name: "gdata-client-meta", version: "1.0", transitive: false
-    runtime group: "com.google.gdata", name: "gdata-core", version: "1.41.4", transitive: false
-    runtime group: "com.googlecode.json-simple", name: "json-simple", version: "1.1", transitive: false
-    runtime group: "com.healthmarketscience.jackcess", name: "jackcess", version: "1.2.4", transitive: false
-    runtime group: "com.jcraft", name: "jsch", version: "0.1.46", transitive: false
-    runtime group: "com.jcraft", name: "jzlib", version: "1.0.7", transitive: false
-    runtime group: "com.lowagie", name: "itext", version: "2.1.7", transitive: false
-    runtime group: "com.lowagie", name: "itext-rtf", version: "2.1.7", transitive: false
-    runtime group: "com.sun.jersey", name: "jersey-client", version: "1.7", transitive: false
-    runtime group: "com.sun.jersey", name: "jersey-core", version: "1.7", transitive: false
-    runtime group: "com.sun.jersey", name: "jersey-json", version: "1.7", transitive: false
-    runtime group: "com.sun.jersey.contribs", name: "jersey-apache-client", version: "1.7", transitive: false
-    runtime group: "com.sun.jersey.contribs", name: "jersey-multipart", version: "1.7", transitive: false
-    runtime group: "com.thoughtworks.xstream", name: "xstream", version: "1.4.2", transitive: false
-    runtime group: "commons-beanutils", name: "commons-beanutils", version: "1.8.0", transitive: false
-    runtime group: "commons-codec", name: "commons-codec", version: "1.3", transitive: false
-    runtime group: "commons-collections", name: "commons-collections", version: "3.2", transitive: false
-    runtime group: "commons-dbcp", name: "commons-dbcp", version: "1.2.1", transitive: false
-    runtime group: "commons-digester", name: "commons-digester", version: "1.8", transitive: false
-    runtime group: "commons-discovery", name: "commons-discovery", version: "0.4", transitive: false
-    runtime group: "commons-fileupload", name: "commons-fileupload", version: "1.2.1", transitive: false
-    runtime group: "commons-httpclient", name: "commons-httpclient", version: "3.1", transitive: false
-    runtime group: "commons-io", name: "commons-io", version: "1.4", transitive: false
-    runtime group: "commons-lang", name: "commons-lang", version: "2.4", transitive: false
-    runtime group: "commons-logging", name: "commons-logging", version: "1.1", transitive: false
-    runtime group: "commons-math", name: "commons-math", version: "1.1", transitive: false
-    runtime group: "commons-net", name: "commons-net", version: "1.4.1", transitive: false
-    runtime group: "commons-pool", name: "commons-pool", version: "1.3", transitive: false
-    runtime group: "commons-validator", name: "commons-validator", version: "1.3.1", transitive: false
-    runtime group: "commons-vfs", name: "commons-vfs", version: "1.0", transitive: false
-    runtime group: "dom4j", name: "dom4j", version: "1.6.1", transitive: false
-    runtime group: "eigenbase", name: "eigenbase-properties", version: "1.1.2", transitive: false
-    runtime group: "eigenbase", name: "eigenbase-resgen", version: "1.3.1", transitive: false
-    runtime group: "eigenbase", name: "eigenbase-xom", version: "1.3.1", transitive: false
-    runtime group: "elasticsearch", name: "elasticsearch", version: "0.16.3", transitive: false
-    runtime group: "feed4j", name: "feed4j", version: "1.0", transitive: false
-    runtime group: "ftp4che", name: "ftp4che", version: "0.7.1", transitive: false
-    runtime group: "georss-rome", name: "georss-rome", version: "0.9.8", transitive: false
-    runtime group: "janino", name: "janino", version: "2.5.16", transitive: false
-    runtime group: "javacup", name: "javacup", version: "10k", transitive: false
-    runtime group: "javadbf", name: "javadbf", version: "20081125", transitive: false
-    runtime group: "javassist", name: "javassist", version: "3.4.GA", transitive: false
-    runtime group: "javax.mail", name: "mail", version: "1.4.1", transitive: false
-    runtime group: "javax.transaction", name: "jta", version: "1.1", transitive: false
-    runtime group: "javax.xml", name: "jaxrpc-api", version: "1.1", transitive: false
-    runtime group: "javax.xml.bind", name: "jsr173_api", version: "1.0", transitive: false
-    runtime group: "jaxen", name: "jaxen", version: "1.1.1", transitive: false
-    runtime group: "jcifs", name: "jcifs", version: "1.3.3", transitive: false
-    runtime group: "jdom", name: "jdom", version: "1.0", transitive: false
-    runtime group: "jexcelapi", name: "jxl", version: "2.6.12", transitive: false
-    runtime group: "jfree", name: "jcommon", version: "1.0.16", transitive: false
-    runtime group: "jfree", name: "jfreechart", version: "1.0.13", transitive: false
-    runtime group: "joda-time", name: "joda-time", version: "1.6", transitive: false
-    runtime group: "jsonpath", name: "jsonpath", version: "1.0", transitive: false
-    runtime group: "jug-lgpl", name: "jug-lgpl", version: "2.0.0", transitive: false
-    runtime group: "ldapjdk", name: "ldapjdk", version: "20000524", transitive: false
-    runtime group: "log4j", name: "log4j", version: "1.2.16", transitive: false
-    runtime group: "monetdb", name: "monetdb-jdbc", version: "2.1", transitive: false
-    runtime group: "net.java.dev.javacc", name: "javacc", version: "5.0", transitive: false
-    runtime group: "net.sf.ehcache", name: "ehcache-core", version: "2.0.1", transitive: false
-    runtime group: "net.sf.saxon", name: "saxon", version: "9.1.0.8", transitive: false
-    runtime group: "net.sf.saxon", name: "saxon-dom", version: "9.1.0.8", transitive: false
-    runtime group: "net.sf.saxon", name: "saxon-xom", version: "9.1.0.8", transitive: false
-    runtime group: "net.sf.scannotation", name: "scannotation", version: "1.0.2", transitive: false
-    runtime group: "net.sourceforge.nekohtml", name: "nekohtml", version: "1.9.7", transitive: false
-    runtime group: "ognl", name: "ognl", version: "2.6.9", transitive: false
-    runtime group: "org.antlr", name: "antlr", version: "3.4-complete", transitive: false
-    runtime group: "org.apache.axis", name: "axis", version: "1.4", transitive: false
-    runtime group: "org.apache.axis2", name: "axis2-adb", version: "1.4.1", transitive: false
-    runtime group: "org.apache.axis2", name: "axis2-kernel", version: "1.4.1", transitive: false
-    runtime group: "org.apache.geronimo.specs", name: "geronimo-stax-api_1.0_spec", version: "1.0", transitive: false
-    runtime group: "org.apache.lucene", name: "lucene-analyzers", version: "3.1.0", transitive: false
-    runtime group: "org.apache.lucene", name: "lucene-core", version: "3.1.0", transitive: false
-    runtime group: "org.apache.lucene", name: "lucene-highlighter", version: "3.1.0", transitive: false
-    runtime group: "org.apache.lucene", name: "lucene-memory", version: "3.1.0", transitive: false
-    runtime group: "org.apache.lucene", name: "lucene-queries", version: "3.1.0", transitive: false
-    runtime group: "org.apache.poi", name: "poi", version: "3.8", transitive: false
-    runtime group: "org.apache.poi", name: "poi-ooxml", version: "3.8", transitive: false
-    runtime group: "org.apache.poi", name: "poi-ooxml-schemas", version: "3.8", transitive: false
-    runtime group: "org.apache.xmlbeans", name: "xmlbeans", version: "2.5.0", transitive: false
-    runtime group: "org.apache.xmlgraphics", name: "batik-awt-util", version: "1.7", transitive: false
-    runtime group: "org.apache.xmlgraphics", name: "batik-bridge", version: "1.7", transitive: false
-    runtime group: "org.apache.xmlgraphics", name: "batik-css", version: "1.7", transitive: false
-    runtime group: "org.apache.xmlgraphics", name: "batik-dom", version: "1.7", transitive: false
-    runtime group: "org.apache.xmlgraphics", name: "batik-ext", version: "1.7", transitive: false
-    runtime group: "org.apache.xmlgraphics", name: "batik-gui-util", version: "1.7", transitive: false
-    runtime group: "org.apache.xmlgraphics", name: "batik-gvt", version: "1.7", transitive: false
-    runtime group: "org.apache.xmlgraphics", name: "batik-parser", version: "1.7", transitive: false
-    runtime group: "org.apache.xmlgraphics", name: "batik-script", version: "1.7", transitive: false
-    runtime group: "org.apache.xmlgraphics", name: "batik-svg-dom", version: "1.7", transitive: false
-    runtime group: "org.apache.xmlgraphics", name: "batik-util", version: "1.7", transitive: false
-    runtime group: "org.apache.xmlgraphics", name: "batik-xml", version: "1.7", transitive: false
-    runtime group: "org.beanshell", name: "bsh", version: "1.3.0", transitive: false
-    runtime group: "org.codehaus.groovy", name: "groovy-all", version: "1.8.0", transitive: false
-    runtime group: "org.codehaus.jackson", name: "jackson-core-asl", version: "1.5.2", transitive: false
-    runtime group: "org.codehaus.jackson", name: "jackson-mapper-asl", version: "1.5.2", transitive: false
-    runtime group: "org.codehaus.jettison", name: "jettison", version: "1.0.1", transitive: false
-    runtime group: "org.codehaus.woodstox", name: "wstx-asl", version: "3.2.9", transitive: false
-    runtime group: "org.drools", name: "drools-api", version: "5.0.1", transitive: false
-    runtime group: "org.drools", name: "drools-compiler", version: "5.0.1", transitive: false
-    runtime group: "org.drools", name: "drools-core", version: "5.0.1", transitive: false
-    runtime group: "org.eclipse.jdt", name: "core", version: "3.4.2.v_883_R34x", transitive: false
-    runtime group: "org.eobjects.sassyreader", name: "SassyReader", version: "0.5", transitive: false
-    runtime group: "org.hibernate", name: "hibernate", version: "3.2.6.ga", transitive: false
-    runtime group: "org.ini4j", name: "ini4j", version: "0.5.1", transitive: false
-    runtime group: "org.livetribe", name: "livetribe-jsr223", version: "2.0.6", transitive: false
-    runtime group: "org.mortbay.jetty", name: "jetty", version: "6.1.21", transitive: false
-    runtime group: "org.mortbay.jetty", name: "jetty-plus", version: "6.1.21", transitive: false
-    runtime group: "org.mortbay.jetty", name: "jetty-util", version: "6.1.21", transitive: false
-    runtime group: "org.mortbay.jetty", name: "servlet-api-2.5", version: "6.1.9", transitive: false
-    runtime group: "org.mvel", name: "mvel2", version: "2.0.10", transitive: false
-    runtime group: "org.netbeans", name: "jmi", version: "200507110943", transitive: false
-    runtime group: "org.netbeans", name: "jmiutils", version: "200507110943", transitive: false
-    runtime group: "org.netbeans", name: "mdrapi", version: "200507110943", transitive: false
-    runtime group: "org.netbeans", name: "mof", version: "200507110943", transitive: false
-    runtime group: "org.netbeans", name: "nbmdr", version: "200507110943-custom", transitive: false
-    runtime group: "org.netbeans", name: "openide-util", version: "200507110943", transitive: false
-    runtime group: "org.odftoolkit", name: "odfdom-java", version: "0.8.6", transitive: false
-    runtime group: "org.olap4j", name: "olap4j", version: "1.0.1.539", transitive: false
-    runtime group: "org.olap4j", name: "olap4j-xmla", version: "1.0.1.500", transitive: false
-    runtime group: "org.owasp.esapi", name: "esapi", version: "2.0.1", transitive: false
-    runtime group: "org.slf4j", name: "slf4j-api", version: "1.6.1", transitive: false
-    runtime group: "org.slf4j", name: "slf4j-log4j12", version: "1.6.1", transitive: false
-    runtime group: "org.snmp4j", name: "snmp4j", version: "1.9.3d", transitive: false
-    runtime group: "org.springframework", name: "spring-beans", version: "2.5.6", transitive: false
-    runtime group: "org.springframework", name: "spring-context", version: "2.5.6", transitive: false
-    runtime group: "org.springframework", name: "spring-context-support", version: "2.5.6", transitive: false
-    runtime group: "org.springframework", name: "spring-core", version: "2.5.6", transitive: false
-    runtime group: "org.syslog4j", name: "syslog4j", version: "0.9.34", transitive: false
-    runtime group: "org.yaml", name: "snakeyaml", version: "1.7", transitive: false
-    runtime group: "oro", name: "oro", version: "2.0.8", transitive: false
-    runtime group: "pentaho", name: "mondrian", version: "3.5.6", transitive: false
-    runtime group: "pentaho", name: "pentaho-connections", version: "2.2.3", transitive: false
-    runtime group: "pentaho", name: "pentaho-cwm", version: "1.5.4", transitive: false
-    runtime group: "pentaho", name: "pentaho-metadata", version: "3.4.7", transitive: false
-    runtime group: "pentaho", name: "salesforce-partner", version: "24.0", transitive: false
-    runtime group: "pentaho-library", name: "libbase", version: "1.2.8", transitive: false
-    runtime group: "pentaho-library", name: "libdocbundle", version: "1.2.8", transitive: false
-    runtime group: "pentaho-library", name: "libfonts", version: "1.2.8", transitive: false
-    runtime group: "pentaho-library", name: "libformat", version: "1.2.8", transitive: false
-    runtime group: "pentaho-library", name: "libformula", version: "1.2.8", transitive: false
-    runtime group: "pentaho-library", name: "libloader", version: "1.2.8", transitive: false
-    runtime group: "pentaho-library", name: "libpixie", version: "1.2.8", transitive: false
-    runtime group: "pentaho-library", name: "librepository", version: "1.2.8", transitive: false
-    runtime group: "pentaho-library", name: "libserializer", version: "1.2.8", transitive: false
-    runtime group: "pentaho-library", name: "libsparkline", version: "1.2.8", transitive: false
-    runtime group: "pentaho-library", name: "libswing", version: "1.2.8", transitive: false
-    runtime group: "pentaho-library", name: "libxml", version: "1.2.8", transitive: false
-    runtime group: "pentaho-reporting-engine", name: "pentaho-reporting-engine-classic-core", version: "3.9.2-GA", transitive: false
-    runtime group: "pentaho-reporting-engine", name: "pentaho-reporting-engine-classic-extensions", version: "3.9.2-GA", transitive: false
-    runtime group: "pentaho-reporting-engine", name: "pentaho-reporting-engine-classic-extensions-drill-down", version: "3.9.2-GA", transitive: false
-    runtime group: "pentaho-reporting-engine", name: "pentaho-reporting-engine-classic-extensions-hibernate", version: "3.9.2-GA", transitive: false
-    runtime group: "pentaho-reporting-engine", name: "pentaho-reporting-engine-classic-extensions-kettle", version: "3.9.2-GA", transitive: false
-    runtime group: "pentaho-reporting-engine", name: "pentaho-reporting-engine-classic-extensions-mondrian", version: "3.9.2-GA", transitive: false
-    runtime group: "pentaho-reporting-engine", name: "pentaho-reporting-engine-classic-extensions-olap4j", version: "3.9.2-GA", transitive: false
-    runtime group: "pentaho-reporting-engine", name: "pentaho-reporting-engine-classic-extensions-pmd", version: "3.9.2-GA", transitive: false
-    runtime group: "pentaho-reporting-engine", name: "pentaho-reporting-engine-classic-extensions-reportdesigner-parser", version: "3.9.2-GA", transitive: false
-    runtime group: "pentaho-reporting-engine", name: "pentaho-reporting-engine-classic-extensions-sampledata", version: "3.9.2-GA", transitive: false
-    runtime group: "pentaho-reporting-engine", name: "pentaho-reporting-engine-classic-extensions-scripting", version: "3.9.2-GA", transitive: false
-    runtime group: "pentaho-reporting-engine", name: "pentaho-reporting-engine-classic-extensions-toc", version: "3.9.2-GA", transitive: false
-    runtime group: "pentaho-reporting-engine", name: "pentaho-reporting-engine-classic-extensions-xpath", version: "3.9.2-GA", transitive: false
-    runtime group: "pentaho-reporting-engine", name: "pentaho-reporting-engine-legacy-charts", version: "3.9.2-GA", transitive: false
-    runtime group: "pentaho-reporting-engine", name: "pentaho-reporting-engine-legacy-functions", version: "3.9.2-GA", transitive: false
-    runtime group: "pentaho-reporting-engine", name: "pentaho-reporting-engine-wizard-core", version: "3.9.2-GA", transitive: false
-    runtime group: "rhino", name: "js", version: "1.7R3", transitive: false
-    runtime group: "rome", name: "rome", version: "1.0", transitive: false
-    runtime group: "secondstring", name: "secondstring", version: "20060615", transitive: false
-    runtime group: "simple-jndi", name: "simple-jndi", version: "0.11.1", transitive: false
-    runtime group: "sun", name: "jlfgr", version: "1.0", transitive: false
-    runtime group: "trilead-ssh2", name: "trilead-ssh2", version: "build213", transitive: false
-    runtime group: "wsdl4j", name: "wsdl4j", version: "1.6.2", transitive: false
-    runtime group: "wsdl4j", name: "wsdl4j-qname", version: "1.6.1", transitive: false
-    runtime group: "xalan", name: "xalan", version: "2.4.1", transitive: false
-    runtime group: "xerces", name: "xercesImpl", version: "2.9.1", transitive: false
-    runtime group: "xml-apis", name: "xml-apis", version: "2.0.2", ext: "jar", transitive: false
-    runtime group: "xpp3", name: "xpp3_min", version: "1.1.4c", transitive: false
+    compile (group: "pentaho-kettle", name: "kettle-engine", version: "5.3.0.3-320", transitive: true) {
+        exclude (group: 'org.olap4j', module: 'olap4j')
+    }
 }
 
 distributions {
